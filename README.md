@@ -29,8 +29,7 @@ Este repositório é feito especialmente para **quem está começando do zero** 
 
 1. **Clone o repositório**:
    
-git clone https://github.com/seu-usuario/treinos-python-iniciantes.git
-cd treinos-python-iniciantes
+git clone [https://github.com/seu-usuario/treinos-python-iniciantes.githttps://github.com/Igorrochalord/Treinos/tree/main](https://github.com/Igorrochalord/Treinos/tree/main)
 Escolha um exercício da pasta exercicios/
 
 Rode com Python:
