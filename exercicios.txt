@@ -1,0 +1,42 @@
+🧮 1. Lógica e Condicionais
+Exercício 1 – Par ou ímpar
+Peça um número ao usuário e diga se ele é par ou ímpar.
+
+Exercício 2 – Calculadora simples
+Receba dois números e uma operação (+, -, *, /) e retorne o resultado.
+
+🔁 2. Laços de repetição
+Exercício 3 – Contador de 1 a 100
+Mostre todos os números de 1 a 100.
+
+Exercício 4 – Tabuada
+Peça um número e exiba sua tabuada de 1 a 10.
+
+Exercício 5 – Soma de pares
+Some todos os números pares entre 1 e 100.
+
+📦 3. Listas e Strings
+Exercício 6 – Média de notas
+Receba 5 notas e calcule a média.
+
+Exercício 7 – Palíndromo
+Verifique se uma palavra digitada é um palíndromo (ex: "radar").
+
+
+# Dica: palavra == palavra[::-1]
+Exercício 8 – Filtro de nomes
+Dada uma lista de nomes, imprima só os que começam com "A".
+
+🔧 4. Funções
+Exercício 9 – Conversor de temperatura
+Crie uma função que converte Celsius para Fahrenheit.
+
+Exercício 10 – Fatorial
+Faça uma função que calcula o fatorial de um número.
+
+🎲 5. Desafios com aleatoriedade
+Exercício 11 – Jogo de adivinhação
+O computador escolhe um número entre 1 e 10. O usuário tenta adivinhar até acertar.
+
+Exercício 12 – Par ou ímpar contra o computador
+O usuário escolhe par ou ímpar e um número. O PC também escolhe um número. Soma os dois e diz quem venceu.
