@@ -40,9 +40,6 @@ Editar
 python exercicio_01.py
 
 📁 Estrutura do repositório
-Copiar
-Editar
-
 
 📂 exercicios/
 ├── 01_par_ou_impar.py
@@ -76,6 +73,4 @@ Bots simples (ex: Telegram ou Discord)
 Feito com ❤️ por Igao
 Contribuições são bem-vindas!
 
-yaml
-Copiar
-Editar
+
