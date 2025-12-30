@@ -1,0 +1,77 @@
+name: Test and Auto-approve PR
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  test_and_approve:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        if [ -f requirements.txt ]; then pip install -r requirements.txt || true; fi
+
+    - name: Run tests
+      run: pytest -q
+
+    - name: Approve and merge Pull Request (bot)
+      if: ${{ success() }}
+      uses: actions/github-script@v6
+      env:
+        BOT_PAT: ${{ secrets.BOT_PAT }}
+      with:
+        script: |
+          const pr = context.payload.pull_request;
+          if (!pr) {
+            core.setFailed('No pull request found in context');
+            return;
+          }
+          if (!process.env.BOT_PAT) {
+            core.setFailed('Secret BOT_PAT is not set. Create a Personal Access Token and add it to repository secrets as BOT_PAT.');
+            return;
+          }
+          const token = process.env.BOT_PAT;
+          const octokit = github.getOctokit(token);
+          const owner = context.repo.owner;
+          const repo = context.repo.repo;
+          const pr_number = pr.number;
+
+          try {
+            // Create an approval review
+            await octokit.rest.pulls.createReview({ owner, repo, pull_number: pr_number, event: 'APPROVE', body: 'Automated approval: tests passed.' });
+            core.info('PR approved by bot.');
+          } catch (err) {
+            core.warning(`Approval failed: ${err.message}`);
+          }
+
+          // Attempt to merge the PR
+          try {
+            const mergeRes = await octokit.rest.pulls.merge({ owner, repo, pull_number: pr_number, merge_method: 'merge' });
+            if (mergeRes.data && mergeRes.data.merged) {
+              core.info(`PR #${pr_number} merged successfully: ${mergeRes.data.sha}`);
+            } else {
+              core.info(`Merge response: ${JSON.stringify(mergeRes.data)}`);
+            }
+          } catch (err) {
+            core.warning(`Auto-merge failed: ${err.message}`);
+            // If merge failed due to branch protection requiring more approvals, you may need to handle that separately.
+          }
+
+# NOTE:
+# - You must create a Personal Access Token (PAT) with `repo` scope and add it to this repository's secrets as `BOT_PAT`.
+# - Auto-approving PRs can be a security risk; review and limit the PAT permissions as needed.
