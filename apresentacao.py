@@ -143,7 +143,7 @@ if __name__ == "__main__":
         else:
             raise RuntimeError(f'Unsupported OS: {sistema}')
 
-    if '--new-window' in sys.argv:
+    if '--new-window' in sys.argv: 
         _open_in_new_terminal()
         sys.exit(0)
 
