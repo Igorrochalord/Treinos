@@ -74,3 +74,10 @@ Feito com ❤️ por Igao
 Contribuições são bem-vindas!
 
 
+## 🎵 Comece por aqui!
+
+Para ter a experiência completa, criamos um script de apresentação que te guia pelos níveis e até toca uma música de foco para você programar!
+
+Execute no seu terminal:
+
+python apresentacao.py
