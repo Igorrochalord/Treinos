@@ -1,0 +1,36 @@
+name: Promote HML → main
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  promote:
+    runs-on: ubuntu-latest
+    environment: promotion
+
+    steps:
+    - name: Create Pull Request from 'hml' to 'main'
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const { owner, repo } = context.repo;
+          const head = 'hml';
+          const base = 'main';
+          const title = `Promote ${head} → ${base}`;
+          const body = `Automated promotion: create PR to merge ${head} into ${base}.\n\nPlease review and merge.`;
+          try {
+            // Check for existing open PRs from head -> base
+            const existing = await github.rest.pulls.list({ owner, repo, head: `${owner}:${head}`, base, state: 'open' });
+            if (existing.data && existing.data.length > 0) {
+              core.info(`Open PR already exists: ${existing.data[0].html_url}`);
+              return;
+            }
+
+            const pr = await github.rest.pulls.create({ owner, repo, title, head, base, body });
+            core.info(`Created PR: ${pr.data.html_url}`);
+          } catch (err) {
+            core.setFailed(`Failed to create PR: ${err.message}`);
+          }

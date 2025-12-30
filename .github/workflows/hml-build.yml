@@ -1,0 +1,38 @@
+name: HML Build (Docker)
+
+on:
+  push:
+    branches: [ "hml" ]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v2
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Build Docker image
+      run: |
+        # build the image locally (tagged for clarity). This does not push to any registry.
+        docker build -t treinos:hml .
+
+    - name: Save Docker image to tar
+      run: |
+        mkdir -p out
+        docker save treinos:hml -o out/treinos_hml.tar
+
+    - name: Upload built image as artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: treinos-image-hml
+        path: out/treinos_hml.tar
