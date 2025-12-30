@@ -1,6 +1,6 @@
 def tabuada():
     for i in range (0,11):
-        print(f"Tabuada do {i}")
+        print(f"Tabuada de:  {i}")
         for j in range (0,11):
             resultado = i * j
             print(f"{i} x {j} = {resultado}")

@@ -4,10 +4,9 @@
 name: Python application
 
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+  push:       # trigger on every push to any branch (every commit)
+  pull_request: # trigger on every pull request
+    # (no branch filter) - useful for testing the pipeline on any branch
 
 permissions:
   contents: read
